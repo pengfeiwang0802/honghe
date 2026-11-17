@@ -94,18 +94,60 @@ function localReview(key, correct) {
 }
 
 /* ---------- 音频 ---------- */
+/* 复用同一个 <audio>：iOS 上反复 new Audio() 会受播放实例限制 */
+let player = null;
+function audioEl() {
+  if (!player) {
+    player = document.createElement("audio");
+    player.preload = "auto";
+    player.setAttribute("playsinline", "");
+    player.setAttribute("webkit-playsinline", "");
+  }
+  return player;
+}
+
+let toastTimer = null;
+function audioToast(msg) {
+  let t = document.getElementById("audio-toast");
+  if (!t) {
+    t = document.createElement("div");
+    t.id = "audio-toast";
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.cssText = "position:fixed;left:50%;bottom:24px;transform:translateX(-50%);"
+    + "background:rgba(48,26,16,.94);color:#fff;padding:10px 16px;border-radius:10px;"
+    + "font-size:14px;line-height:1.4;z-index:9999;max-width:86vw;text-align:center;"
+    + "pointer-events:none;transition:opacity .3s;box-shadow:0 4px 18px rgba(0,0,0,.28)";
+  t.style.opacity = "1";
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.style.opacity = "0"; }, 4000);
+}
+
 function speak(text, btn) {
-  if (lastAudio) { lastAudio.pause(); lastAudio = null; }
   document.querySelectorAll(".speak.playing").forEach(b => b.classList.remove("playing"));
   const src = audioSrc(text);
-  if (!src) { if (btn) btn.classList.remove("playing"); return; }
-  const a = new Audio(src);
-  lastAudio = a;
+  if (!src) { audioToast("这段没有音频：" + text); return; }
+  const a = audioEl();
+  try { a.pause(); } catch (e) {}
   if (btn) btn.classList.add("playing");
   const done = () => { if (btn) btn.classList.remove("playing"); };
-  a.addEventListener("ended", done);
-  a.addEventListener("error", done);
-  a.play().catch(done);
+  a.onended = done;
+  a.onerror = () => {
+    done();
+    const code = a.error ? a.error.code : "?";
+    audioToast("音频无法加载（错误码 " + code + "）");
+  };
+  a.src = src;
+  const p = a.play();
+  if (p && p.catch) {
+    p.catch(err => {
+      done();
+      // 换句时打断上一次播放会报 AbortError，不是故障
+      if (err && err.name === "AbortError") return;
+      audioToast("播放被拦住：" + (err && err.name ? err.name : err));
+    });
+  }
 }
 
 /* ---------- 词卡（句子解剖与单词表共用） ---------- */

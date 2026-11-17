@@ -1,5 +1,5 @@
 /* 红河河粉 · 离线缓存（自动生成，勿手改） */
-const VERSION = "b1bfb7c332";
+const VERSION = "46710c11b1";
 const CACHE = "honghe-" + VERSION;
 const ASSETS = [
  "./",
@@ -296,6 +296,35 @@ const ASSETS = [
  "audio/fe8a7d5c1db61fb1.wav"
 ];
 
+/* Safari / iOS 播放音频会发 Range 请求；缓存命中时必须回 206，
+   否则 Safari 拿到 200 全量会判定媒体不可播（Chrome 不受影响）。 */
+async function rangeResponse(req, cached) {
+  const buf = await cached.arrayBuffer();
+  const size = buf.byteLength;
+  const m = /bytes=(\d*)-(\d*)/.exec(req.headers.get("range") || "");
+  if (!m) return cached;
+  let start = m[1] === "" ? null : parseInt(m[1], 10);
+  let end = m[2] === "" ? null : parseInt(m[2], 10);
+  if (start === null && end === null) return cached;
+  if (start === null) { start = Math.max(0, size - end); end = size - 1; }
+  if (end === null || end >= size) end = size - 1;
+  if (start >= size) {
+    return new Response(null, { status: 416, headers: { "Content-Range": "bytes */" + size } });
+  }
+  const chunk = buf.slice(start, end + 1);
+  return new Response(chunk, {
+    status: 206,
+    statusText: "Partial Content",
+    headers: {
+      "Content-Range": "bytes " + start + "-" + end + "/" + size,
+      "Content-Length": String(chunk.byteLength),
+      "Accept-Ranges": "bytes",
+      "Content-Type": cached.headers.get("Content-Type") || "application/octet-stream",
+      "Cache-Control": cached.headers.get("Cache-Control") || "max-age=600",
+    },
+  });
+}
+
 self.addEventListener("install", event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE);
@@ -346,9 +375,12 @@ self.addEventListener("fetch", event => {
       }
     }
     const hit = await cache.match(req, { ignoreSearch: true });
-    if (hit) return hit;
+    if (hit) {
+      return req.headers.has("range") ? await rangeResponse(req, hit) : hit;
+    }
     const res = await fetch(req);
-    if (res && res.ok && res.type === "basic") {
+    // 只缓存完整 200；206 局部响应缓存下来会永久损坏该音频
+    if (res && res.status === 200 && res.type === "basic") {
       cache.put(req, res.clone()).catch(() => {});
     }
     return res;
