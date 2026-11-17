@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="honghe-mode" content="static">
+<title>红河河粉 · 越南语</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#8b2e1b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="红河河粉">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<meta name="robots" content="noindex,nofollow">
+
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <span class="bowl">🍜</span>
+    <div>
+      <h1>红河河粉</h1>
+      <p class="tag">场景 → 解构 → 重建</p>
+    </div>
+  </div>
+  <div class="topbar">
+    <select id="lesson-select" aria-label="选择课程"></select>
+    <span id="stats" class="stats">—</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- 场景 -->
+  <section id="scene" class="panel">
+    <div class="panel-head">
+      <h2 id="lesson-title">加载中…</h2>
+      <div class="head-right">
+        <span id="lesson-mins" class="pill"></span>
+        <button id="toggle-trans" class="ghost">显示翻译</button>
+        <button id="toggle-all" class="ghost">展开全部解剖</button>
+      </div>
+    </div>
+    <p id="lesson-blurb" class="blurb"></p>
+    <ol id="lines" class="lines"></ol>
+  </section>
+
+  <!-- 本课焦点 -->
+  <section id="focus" class="panel hidden">
+    <div class="panel-head"><h2>这一课的关键：称呼即人称</h2></div>
+    <div id="focus-body"></div>
+  </section>
+
+  <!-- 重建：练习 -->
+  <section id="drill" class="panel hidden">
+    <div class="panel-head">
+      <h2>重建 · 你来造</h2>
+      <span id="drill-progress" class="pill"></span>
+    </div>
+    <div id="drill-body"></div>
+  </section>
+
+  <!-- 单词表 -->
+  <section id="glossary" class="panel hidden">
+    <div class="panel-head">
+      <h2>本课单词表</h2>
+      <span id="glossary-count" class="pill"></span>
+    </div>
+    <p class="blurb">点击任一单词发音。带橙色标记的是汉越词——能和你认识的字对上。</p>
+    <div id="glossary-body"></div>
+  </section>
+
+  <!-- 钩子 -->
+  <section id="hooks" class="panel hidden">
+    <div class="panel-head"><h2>你可能想问</h2></div>
+    <p class="blurb">这些是我没讲透的地方。挑一条问我，我就把它写深。</p>
+    <ul id="hooks-list" class="hooks"></ul>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <span id="foot-mode">本地运行 · 数据不出本机</span>
+  <span id="foot-ver">v0.1</span>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

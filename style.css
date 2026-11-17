@@ -1,0 +1,270 @@
+/* 红河河粉 — phở 配色：米白汤底 / 琥珀 / 深棕 */
+:root{
+  --bg:#faf7f2;
+  --card:#fffdfa;
+  --ink:#2b211b;
+  --ink-soft:#6b5d52;
+  --line:#e8ddd0;
+  --amber:#c8791f;
+  --amber-soft:#f6e6cf;
+  --green:#4f7a52;
+  --red:#b0453a;
+  --radius:14px;
+  --shadow:0 1px 2px rgba(60,40,20,.05), 0 8px 24px -12px rgba(60,40,20,.18);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  /* 拉丁/越南语必须排在 CJK 字体之前：PingFang SC 与 -apple-system 的
+     组合在 macOS 上会把声调符号画到字母右侧（sẽ → se ◌̂◌̃）。 */
+  font:16px/1.7 system-ui,"Helvetica Neue",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* 顶栏 */
+.top{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:18px 28px;border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#fffdfa,#fbf6ee);
+  position:sticky;top:0;z-index:20;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.bowl{font-size:28px;line-height:1}
+.top h1{margin:0;font-size:19px;letter-spacing:.02em}
+.tag{margin:2px 0 0;font-size:12px;color:var(--ink-soft);letter-spacing:.06em}
+.topbar{display:flex;align-items:center;gap:12px}
+select{
+  padding:7px 10px;border:1px solid var(--line);border-radius:9px;
+  background:var(--card);color:var(--ink);font-size:14px;
+}
+.stats{font-size:12px;color:var(--ink-soft);white-space:nowrap}
+
+main{max-width:820px;margin:0 auto;padding:26px 20px 80px}
+
+/* 卡片 */
+.panel{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:22px 24px;margin-bottom:20px;
+}
+.panel.hidden{display:none}
+.panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px}
+.panel h2{margin:0;font-size:17px;font-weight:650;letter-spacing:.01em}
+.blurb{color:var(--ink-soft);font-size:14.5px;margin:6px 0 18px}
+
+.ghost{
+  background:none;border:1px solid var(--line);border-radius:9px;
+  padding:5px 11px;font-size:12.5px;color:var(--ink-soft);cursor:pointer;
+}
+.ghost:hover{border-color:var(--amber);color:var(--amber)}
+
+.head-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+
+/* 填空题 */
+.fill-sent{
+  font-size:19px;line-height:1.8;margin:0 0 16px;
+  background:#fbf7f0;border:1px solid #efe5d6;border-radius:11px;
+  padding:14px 16px;letter-spacing:.01em;
+}
+.fill-sent .blank{
+  display:inline-block;min-width:74px;text-align:center;
+  border-bottom:2px solid var(--amber);color:var(--amber);
+  font-weight:700;margin:0 3px;
+}
+
+/* 对话行 */
+.lines{list-style:none;margin:0;padding:0}
+.line{
+  border-top:1px solid var(--line);padding:18px 0;
+}
+.line:first-child{border-top:none;padding-top:4px}
+
+.who{
+  font-size:12px;letter-spacing:.08em;color:var(--amber);
+  text-transform:uppercase;margin-bottom:6px;font-weight:600;
+}
+.vi{
+  font-size:23px;line-height:1.5;font-weight:600;letter-spacing:.01em;
+  cursor:pointer;display:flex;align-items:flex-start;gap:10px;
+}
+.vi:hover{color:var(--amber)}
+.vi .txt{flex:1}
+.speak{
+  flex:0 0 auto;border:none;background:var(--amber-soft);color:var(--amber);
+  width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:15px;
+  display:grid;place-items:center;transition:.15s;
+}
+.speak:hover{background:var(--amber);color:#fff}
+.speak.playing{animation:pulse .9s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+
+.zh{color:var(--ink-soft);font-size:15px;margin-top:4px}
+.en{color:#9a8b7e;font-size:13px;font-style:italic;margin-top:2px}
+
+/* 解剖 */
+.anat{margin-top:14px;padding:16px 18px;background:#fbf7f0;border-radius:11px;border:1px solid #efe5d6}
+.anat.hidden{display:none}
+.anat h4{margin:0 0 8px;font-size:12px;letter-spacing:.1em;color:var(--amber);text-transform:uppercase}
+.anat p{margin:0 0 12px;font-size:14.5px;color:var(--ink)}
+.anat p:last-child{margin-bottom:0}
+
+.words{display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 14px}
+.word{
+  background:#fff;border:1px solid var(--line);border-radius:9px;
+  padding:7px 11px;font-size:13.5px;cursor:pointer;transition:.15s;
+}
+.word:hover{border-color:var(--amber);background:var(--amber-soft)}
+.word b{font-weight:650}
+.word .hv{color:var(--amber);font-size:12px;margin-left:5px}
+.word .gl{color:var(--ink-soft);display:block;font-size:12.5px;margin-top:2px}
+
+/* 焦点表 */
+table.focus{width:100%;border-collapse:collapse;font-size:14px;margin-top:8px}
+table.focus th,table.focus td{
+  text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top;
+}
+table.focus th{font-size:11.5px;letter-spacing:.08em;color:var(--ink-soft);text-transform:uppercase;font-weight:600}
+table.focus td b{color:var(--amber)}
+.note{font-size:13px;color:var(--ink-soft);margin-top:12px}
+
+/* 焦点分块 */
+.block-cap{
+  font-size:12.5px;letter-spacing:.05em;color:var(--amber);
+  margin:24px 0 9px;font-weight:650;
+}
+#focus-body > .block-cap:first-of-type{margin-top:14px}
+.prose{font-size:14.5px;line-height:1.9;margin:0;color:var(--ink)}
+.prose code,table.focus code{
+  background:#f2e9dc;padding:1px 5px;border-radius:4px;
+  font-size:12.5px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+
+/* 练习 */
+.pill{
+  font-size:12px;padding:3px 9px;border-radius:99px;
+  background:var(--amber-soft);color:var(--amber);
+}
+.q{font-size:17px;margin:4px 0 16px;line-height:1.7}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{
+  text-align:left;padding:12px 15px;border:1px solid var(--line);border-radius:11px;
+  background:#fff;font-size:15.5px;cursor:pointer;transition:.15s;color:var(--ink);
+}
+.opt:hover:not(:disabled){border-color:var(--amber);background:#fffaf3}
+.opt:disabled{cursor:default}
+.opt.right{border-color:var(--green);background:#eef5ee}
+.opt.wrong{border-color:var(--red);background:#fbeeec}
+
+.fb{margin-top:16px;padding:14px 16px;border-radius:11px;font-size:14.5px;display:none}
+.fb.show{display:block}
+.fb.ok{background:#eef5ee;border:1px solid #cfe1d0}
+.fb.no{background:#fbeeec;border:1px solid #f0d2ce}
+.fb .why{margin-top:6px;color:var(--ink-soft);font-size:13.5px}
+
+.drill-nav{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+.btn{
+  border:none;background:var(--amber);color:#fff;padding:10px 20px;
+  border-radius:10px;font-size:14.5px;cursor:pointer;font-weight:600;
+}
+.btn:hover{background:#a9631a}
+.btn:disabled{background:#d9cbb8;cursor:default}
+
+.foot{
+  max-width:820px;margin:0 auto;padding:0 20px 30px;
+  display:flex;justify-content:space-between;
+  font-size:12px;color:#a99a8c;
+}
+
+@media (max-width:600px){
+  .top{padding:14px 16px;flex-wrap:wrap}
+  .topbar{width:100%;flex-wrap:wrap}
+  #lesson-select{flex:1 1 0;min-width:0}
+  .stats{flex:0 0 auto}
+  main{padding:18px 14px 60px}
+  .panel{padding:18px 16px}
+  .vi{font-size:20px}
+}
+
+/* 听力题 */
+.listen-play{
+  display:block;width:100%;padding:16px;margin-bottom:18px;
+  border:2px dashed var(--amber);border-radius:12px;background:var(--amber-soft);
+  color:var(--amber);font-size:16px;font-weight:650;cursor:pointer;
+}
+.listen-play:hover{background:#f2ddc0}
+
+/* 产出题 */
+.hint{font-size:13.5px;color:var(--ink-soft);margin:0 0 12px;
+  background:#fbf7f0;border-left:3px solid var(--amber);padding:8px 12px;border-radius:0 8px 8px 0}
+.produce-ans{
+  margin:16px 0 12px;padding:16px 18px;border-radius:11px;
+  background:#eef5ee;border:1px solid #cfe1d0;
+}
+.produce-ans .ans-label{
+  font-size:11.5px;letter-spacing:.1em;color:var(--green);
+  text-transform:uppercase;margin-bottom:6px;font-weight:650;
+}
+.produce-ans b{font-size:19px;font-weight:650;letter-spacing:.01em}
+.self-check{display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}
+.self-result{font-size:13px;padding:4px 10px;border-radius:99px}
+.self-result.ok{background:#eef5ee;color:var(--green)}
+.self-result.no{background:#fbeeec;color:var(--red)}
+
+/* 钩子 */
+.hooks{list-style:none;margin:0;padding:0}
+.hooks li{
+  padding:11px 0 11px 22px;border-top:1px solid var(--line);
+  font-size:14.5px;line-height:1.7;color:var(--ink);position:relative;
+}
+.hooks li:first-child{border-top:none}
+.hooks li::before{
+  content:"?";position:absolute;left:0;top:11px;
+  width:15px;height:15px;border-radius:50%;background:var(--amber-soft);
+  color:var(--amber);font-size:10px;font-weight:700;
+  display:grid;place-items:center;
+}
+
+/* 裸场景：先猜再看 */
+body.hide-trans .zh,
+body.hide-trans .en{display:none}
+body.hide-trans.show-trans .zh{display:block}
+body.hide-trans.show-trans .en{display:block}
+
+/* 精讲专题（可折叠） */
+.topic{border:1px solid var(--line);border-radius:12px;margin-bottom:12px;overflow:hidden;background:#fffdfa}
+.topic-head{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;
+  padding:14px 16px;background:#fbf7f0;border:none;cursor:pointer;
+  font-family:inherit;color:var(--ink);
+}
+.topic-head:hover{background:var(--amber-soft)}
+.topic-title{font-size:15px;font-weight:650;flex-shrink:0}
+.topic-sub{
+  flex:1;font-size:12.5px;color:var(--ink-soft);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.chev{color:var(--amber);font-size:13px;transition:transform .18s;flex-shrink:0}
+.topic.collapsed .chev{transform:rotate(-90deg)}
+.topic-body{padding:16px 18px 6px;border-top:1px solid var(--line)}
+.topic.collapsed .topic-body{display:none}
+.topic-body .block-cap:first-child{margin-top:0}
+
+/* 单词表 */
+#glossary-body .words{margin-bottom:4px}
+
+/* 词的构成拆解 */
+.word .parts{
+  display:block;margin-top:6px;padding-top:5px;
+  border-top:1px dashed var(--line);
+  font-size:12px;color:var(--ink-soft);line-height:1.6;
+}
+.word .parts i{color:var(--amber);font-style:normal;font-weight:650}
+
+/* 「精讲」角标：该词只在精讲里出现，不在课文句子中 */
+.word .badge{
+  font-size:10px;color:var(--ink-soft);background:#f2ece2;
+  padding:1px 5px;border-radius:4px;margin-left:5px;
+  vertical-align:middle;font-weight:500;letter-spacing:.02em;
+}
