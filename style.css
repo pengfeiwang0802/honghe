@@ -262,6 +262,16 @@ body.hide-trans.show-trans .en{display:block}
 }
 .word .parts i{color:var(--amber);font-style:normal;font-weight:650}
 
+/* 音频错误提示：平时透明且不挡点击 */
+#audio-toast{
+  position:fixed;left:50%;bottom:24px;transform:translateX(-50%);
+  background:rgba(48,26,16,.94);color:#fff;padding:10px 16px;border-radius:10px;
+  font-size:14px;line-height:1.4;z-index:9999;max-width:86vw;text-align:center;
+  pointer-events:none;opacity:0;transition:opacity .3s;
+  box-shadow:0 4px 18px rgba(0,0,0,.28);
+}
+#audio-toast.show{opacity:1}
+
 /* 「精讲」角标：该词只在精讲里出现，不在课文句子中 */
 .word .badge{
   font-size:10px;color:var(--ink-soft);background:#f2ece2;

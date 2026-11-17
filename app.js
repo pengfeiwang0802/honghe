@@ -108,20 +108,12 @@ function audioEl() {
 
 let toastTimer = null;
 function audioToast(msg) {
-  let t = document.getElementById("audio-toast");
-  if (!t) {
-    t = document.createElement("div");
-    t.id = "audio-toast";
-    document.body.appendChild(t);
-  }
+  const t = document.getElementById("audio-toast");
+  if (!t) return;
   t.textContent = msg;
-  t.style.cssText = "position:fixed;left:50%;bottom:24px;transform:translateX(-50%);"
-    + "background:rgba(48,26,16,.94);color:#fff;padding:10px 16px;border-radius:10px;"
-    + "font-size:14px;line-height:1.4;z-index:9999;max-width:86vw;text-align:center;"
-    + "pointer-events:none;transition:opacity .3s;box-shadow:0 4px 18px rgba(0,0,0,.28)";
-  t.style.opacity = "1";
+  t.classList.add("show");
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { t.style.opacity = "0"; }, 4000);
+  toastTimer = setTimeout(() => t.classList.remove("show"), 4000);
 }
 
 function speak(text, btn) {

@@ -1,5 +1,5 @@
 /* 红河河粉 · 离线缓存（自动生成，勿手改） */
-const VERSION = "46710c11b1";
+const VERSION = "ff49ef2c1f";
 const CACHE = "honghe-" + VERSION;
 const ASSETS = [
  "./",
